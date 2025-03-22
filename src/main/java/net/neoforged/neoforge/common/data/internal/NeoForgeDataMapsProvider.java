@@ -77,8 +77,8 @@ public class NeoForgeDataMapsProvider extends DataMapProvider {
                 .forEach((type, sound) -> imitations.add(type.builtInRegistryHolder(), new ParrotImitation(sound), false));
 
         final var raidHeroGifts = builder(NeoForgeDataMaps.RAID_HERO_GIFTS);
-        ObfuscationReflectionHelper.<Map<VillagerProfession, ResourceKey<LootTable>>, GiveGiftToHero>getPrivateValue(GiveGiftToHero.class, null, "GIFTS")
-                .forEach((type, lootTable) -> raidHeroGifts.add(BuiltInRegistries.VILLAGER_PROFESSION.wrapAsHolder(type), new RaidHeroGift(lootTable), false));
+        ObfuscationReflectionHelper.<Map<ResourceKey<VillagerProfession>, ResourceKey<LootTable>>, GiveGiftToHero>getPrivateValue(GiveGiftToHero.class, null, "GIFTS")
+                .forEach((type, lootTable) -> raidHeroGifts.add(BuiltInRegistries.VILLAGER_PROFESSION.getOrThrow(type), new RaidHeroGift(lootTable), false));
 
         final var monsterRoomMobs = builder(NeoForgeDataMaps.MONSTER_ROOM_MOBS);
         Arrays.stream(ObfuscationReflectionHelper.<EntityType<?>[], MonsterRoomFeature>getPrivateValue(MonsterRoomFeature.class, null, "MOBS"))
