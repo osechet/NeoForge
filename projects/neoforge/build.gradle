@@ -64,6 +64,7 @@ final createCompatJar = tasks.register('createCompatibilityCheckJar', ProvideNeo
 checkJarCompatibility {
     isAPI = true
     baseJar = createCompatJar.flatMap { it.output }
+    inputJar = tasks.named("joinedJar", Jar).flatMap { it.archiveFile }
 }
 
 // We don't want to include client in non-client runs,
@@ -447,9 +448,6 @@ configurations {
     }
 }
 
-jar {
-    from sourceSets.client.output
-}
 sourcesJar {
     from sourceSets.client.allSource
 }
